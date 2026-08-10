@@ -1,0 +1,8 @@
+name: smoke-reusable
+on:
+  workflow_call:
+jobs:
+  r:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "reusable resolved via .github->.profile redirect on $(uname -s)"
