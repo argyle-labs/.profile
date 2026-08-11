@@ -398,7 +398,7 @@ jobs:
 
       - name: Create GitHub Release (pipeline-tagged)
         env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_TOKEN: ${{ secrets.GH_RELEASE_TOKEN || secrets.GITHUB_TOKEN }}
         run: |
           set -euo pipefail
           flags=""
@@ -407,6 +407,7 @@ jobs:
           [ -z "$notes" ] && notes="Automated ${{ inputs.channel }} release of \`${{ github.repository }}\`, built against orca \`main\`. Plugin binary + sha256 per host target."
           ls -la dist
           gh release create "${{ needs.version.outputs.tag }}" \
+            --repo "${{ github.repository }}" \
             --target "${{ github.sha }}" \
             --title "${{ needs.version.outputs.tag }}" \
             --notes "$notes" \
